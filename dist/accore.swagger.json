@@ -220,9 +220,9 @@
         ]
       }
     },
-    "/v1/user/email/{id}": {
+    "/v1/user/email/primary": {
       "get": {
-        "operationId": "EmailService_Get",
+        "operationId": "EmailService_GetPrimary",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -237,14 +237,6 @@
             }
           }
         },
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
         "tags": [
           "EmailService"
         ],
@@ -253,7 +245,9 @@
             "bearer": []
           }
         ]
-      },
+      }
+    },
+    "/v1/user/email/{id}": {
       "delete": {
         "operationId": "EmailService_Delete",
         "responses": {
@@ -424,9 +418,70 @@
         ]
       }
     },
+    "/v1/user/phone/primary": {
+      "get": {
+        "operationId": "PhoneService_GetPrimary",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbPhone"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "PhoneService"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
     "/v1/user/phone/{id}": {
       "delete": {
         "operationId": "PhoneService_Delete",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "PhoneService"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "patch": {
+        "operationId": "PhoneService_SetPrimary",
         "responses": {
           "200": {
             "description": "A successful response.",

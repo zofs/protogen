@@ -22,9 +22,11 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	PhoneService_List_FullMethodName   = "/accore.v1.PhoneService/List"
-	PhoneService_Add_FullMethodName    = "/accore.v1.PhoneService/Add"
-	PhoneService_Delete_FullMethodName = "/accore.v1.PhoneService/Delete"
+	PhoneService_List_FullMethodName       = "/accore.v1.PhoneService/List"
+	PhoneService_Add_FullMethodName        = "/accore.v1.PhoneService/Add"
+	PhoneService_Delete_FullMethodName     = "/accore.v1.PhoneService/Delete"
+	PhoneService_SetPrimary_FullMethodName = "/accore.v1.PhoneService/SetPrimary"
+	PhoneService_GetPrimary_FullMethodName = "/accore.v1.PhoneService/GetPrimary"
 )
 
 // PhoneServiceClient is the client API for PhoneService service.
@@ -34,6 +36,8 @@ type PhoneServiceClient interface {
 	List(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*pb.Phones, error)
 	Add(ctx context.Context, in *pb.Phone, opts ...grpc.CallOption) (*empty.Empty, error)
 	Delete(ctx context.Context, in *dtopb.ID, opts ...grpc.CallOption) (*empty.Empty, error)
+	SetPrimary(ctx context.Context, in *dtopb.ID, opts ...grpc.CallOption) (*empty.Empty, error)
+	GetPrimary(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*pb.Phone, error)
 }
 
 type phoneServiceClient struct {
@@ -71,6 +75,24 @@ func (c *phoneServiceClient) Delete(ctx context.Context, in *dtopb.ID, opts ...g
 	return out, nil
 }
 
+func (c *phoneServiceClient) SetPrimary(ctx context.Context, in *dtopb.ID, opts ...grpc.CallOption) (*empty.Empty, error) {
+	out := new(empty.Empty)
+	err := c.cc.Invoke(ctx, PhoneService_SetPrimary_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *phoneServiceClient) GetPrimary(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*pb.Phone, error) {
+	out := new(pb.Phone)
+	err := c.cc.Invoke(ctx, PhoneService_GetPrimary_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PhoneServiceServer is the server API for PhoneService service.
 // All implementations must embed UnimplementedPhoneServiceServer
 // for forward compatibility
@@ -78,6 +100,8 @@ type PhoneServiceServer interface {
 	List(context.Context, *empty.Empty) (*pb.Phones, error)
 	Add(context.Context, *pb.Phone) (*empty.Empty, error)
 	Delete(context.Context, *dtopb.ID) (*empty.Empty, error)
+	SetPrimary(context.Context, *dtopb.ID) (*empty.Empty, error)
+	GetPrimary(context.Context, *empty.Empty) (*pb.Phone, error)
 	mustEmbedUnimplementedPhoneServiceServer()
 }
 
@@ -93,6 +117,12 @@ func (UnimplementedPhoneServiceServer) Add(context.Context, *pb.Phone) (*empty.E
 }
 func (UnimplementedPhoneServiceServer) Delete(context.Context, *dtopb.ID) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
+}
+func (UnimplementedPhoneServiceServer) SetPrimary(context.Context, *dtopb.ID) (*empty.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetPrimary not implemented")
+}
+func (UnimplementedPhoneServiceServer) GetPrimary(context.Context, *empty.Empty) (*pb.Phone, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPrimary not implemented")
 }
 func (UnimplementedPhoneServiceServer) mustEmbedUnimplementedPhoneServiceServer() {}
 
@@ -161,6 +191,42 @@ func _PhoneService_Delete_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PhoneService_SetPrimary_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(dtopb.ID)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PhoneServiceServer).SetPrimary(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PhoneService_SetPrimary_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PhoneServiceServer).SetPrimary(ctx, req.(*dtopb.ID))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PhoneService_GetPrimary_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(empty.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PhoneServiceServer).GetPrimary(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PhoneService_GetPrimary_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PhoneServiceServer).GetPrimary(ctx, req.(*empty.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // PhoneService_ServiceDesc is the grpc.ServiceDesc for PhoneService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -179,6 +245,14 @@ var PhoneService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Delete",
 			Handler:    _PhoneService_Delete_Handler,
+		},
+		{
+			MethodName: "SetPrimary",
+			Handler:    _PhoneService_SetPrimary_Handler,
+		},
+		{
+			MethodName: "GetPrimary",
+			Handler:    _PhoneService_GetPrimary_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
