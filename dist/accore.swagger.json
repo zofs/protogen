@@ -206,7 +206,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/pbEmail"
+              "$ref": "#/definitions/dtopbString"
             }
           }
         ],
@@ -404,7 +404,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/pbPhone"
+              "$ref": "#/definitions/dtopbString"
             }
           }
         ],
@@ -552,6 +552,14 @@
     }
   },
   "definitions": {
+    "dtopbString": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "string"
+        }
+      }
+    },
     "pbChangePassword": {
       "type": "object",
       "properties": {

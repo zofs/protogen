@@ -16,7 +16,6 @@ import (
 	"github.com/golang/protobuf/ptypes/empty"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/utilities"
-	"github.com/zofs/protogen/accore/pb"
 	"github.com/zofs/protogen/dtopb"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
@@ -53,7 +52,7 @@ func local_request_PhoneService_List_0(ctx context.Context, marshaler runtime.Ma
 }
 
 func request_PhoneService_Add_0(ctx context.Context, marshaler runtime.Marshaler, client PhoneServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq pb.Phone
+	var protoReq dtopb.String
 	var metadata runtime.ServerMetadata
 
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
@@ -66,7 +65,7 @@ func request_PhoneService_Add_0(ctx context.Context, marshaler runtime.Marshaler
 }
 
 func local_request_PhoneService_Add_0(ctx context.Context, marshaler runtime.Marshaler, server PhoneServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq pb.Phone
+	var protoReq dtopb.String
 	var metadata runtime.ServerMetadata
 
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {

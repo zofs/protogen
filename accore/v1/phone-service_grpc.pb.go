@@ -34,7 +34,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PhoneServiceClient interface {
 	List(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*pb.Phones, error)
-	Add(ctx context.Context, in *pb.Phone, opts ...grpc.CallOption) (*empty.Empty, error)
+	Add(ctx context.Context, in *dtopb.String, opts ...grpc.CallOption) (*empty.Empty, error)
 	Delete(ctx context.Context, in *dtopb.ID, opts ...grpc.CallOption) (*empty.Empty, error)
 	SetPrimary(ctx context.Context, in *dtopb.ID, opts ...grpc.CallOption) (*empty.Empty, error)
 	GetPrimary(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*pb.Phone, error)
@@ -57,7 +57,7 @@ func (c *phoneServiceClient) List(ctx context.Context, in *empty.Empty, opts ...
 	return out, nil
 }
 
-func (c *phoneServiceClient) Add(ctx context.Context, in *pb.Phone, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *phoneServiceClient) Add(ctx context.Context, in *dtopb.String, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, PhoneService_Add_FullMethodName, in, out, opts...)
 	if err != nil {
@@ -98,7 +98,7 @@ func (c *phoneServiceClient) GetPrimary(ctx context.Context, in *empty.Empty, op
 // for forward compatibility
 type PhoneServiceServer interface {
 	List(context.Context, *empty.Empty) (*pb.Phones, error)
-	Add(context.Context, *pb.Phone) (*empty.Empty, error)
+	Add(context.Context, *dtopb.String) (*empty.Empty, error)
 	Delete(context.Context, *dtopb.ID) (*empty.Empty, error)
 	SetPrimary(context.Context, *dtopb.ID) (*empty.Empty, error)
 	GetPrimary(context.Context, *empty.Empty) (*pb.Phone, error)
@@ -112,7 +112,7 @@ type UnimplementedPhoneServiceServer struct {
 func (UnimplementedPhoneServiceServer) List(context.Context, *empty.Empty) (*pb.Phones, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method List not implemented")
 }
-func (UnimplementedPhoneServiceServer) Add(context.Context, *pb.Phone) (*empty.Empty, error) {
+func (UnimplementedPhoneServiceServer) Add(context.Context, *dtopb.String) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Add not implemented")
 }
 func (UnimplementedPhoneServiceServer) Delete(context.Context, *dtopb.ID) (*empty.Empty, error) {
@@ -156,7 +156,7 @@ func _PhoneService_List_Handler(srv interface{}, ctx context.Context, dec func(i
 }
 
 func _PhoneService_Add_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(pb.Phone)
+	in := new(dtopb.String)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -168,7 +168,7 @@ func _PhoneService_Add_Handler(srv interface{}, ctx context.Context, dec func(in
 		FullMethod: PhoneService_Add_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PhoneServiceServer).Add(ctx, req.(*pb.Phone))
+		return srv.(PhoneServiceServer).Add(ctx, req.(*dtopb.String))
 	}
 	return interceptor(ctx, in, info, handler)
 }
