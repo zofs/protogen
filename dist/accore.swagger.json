@@ -36,7 +36,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/pbUserInfo"
+              "$ref": "#/definitions/pbLoginInfo"
             }
           },
           "default": {
@@ -531,6 +531,17 @@
             "type": "object",
             "$ref": "#/definitions/pbEmail"
           }
+        }
+      }
+    },
+    "pbLoginInfo": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        },
+        "user": {
+          "$ref": "#/definitions/pbUserInfo"
         }
       }
     },

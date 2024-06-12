@@ -17,7 +17,7 @@ import (
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/utilities"
 	"github.com/zofs/protogen/accore/pb"
-	"github.com/zofs/protogen/custom"
+	"github.com/zofs/protogen/dtopb"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/grpclog"
@@ -113,7 +113,7 @@ func local_request_UserService_Update_0(ctx context.Context, marshaler runtime.M
 }
 
 func request_UserService_First_0(ctx context.Context, marshaler runtime.Marshaler, client UserServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq custom.UID
+	var protoReq dtopb.ID
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -139,7 +139,7 @@ func request_UserService_First_0(ctx context.Context, marshaler runtime.Marshale
 }
 
 func local_request_UserService_First_0(ctx context.Context, marshaler runtime.Marshaler, server UserServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq custom.UID
+	var protoReq dtopb.ID
 	var metadata runtime.ServerMetadata
 
 	var (

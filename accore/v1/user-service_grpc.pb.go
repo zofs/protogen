@@ -10,7 +10,7 @@ import (
 	context "context"
 	empty "github.com/golang/protobuf/ptypes/empty"
 	pb "github.com/zofs/protogen/accore/pb"
-	custom "github.com/zofs/protogen/custom"
+	dtopb "github.com/zofs/protogen/dtopb"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -34,9 +34,9 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserServiceClient interface {
 	Register(ctx context.Context, in *pb.UserRegister, opts ...grpc.CallOption) (*empty.Empty, error)
-	Login(ctx context.Context, in *pb.UserLogin, opts ...grpc.CallOption) (*pb.UserInfo, error)
+	Login(ctx context.Context, in *pb.UserLogin, opts ...grpc.CallOption) (*pb.LoginInfo, error)
 	Update(ctx context.Context, in *pb.UserUpdate, opts ...grpc.CallOption) (*empty.Empty, error)
-	First(ctx context.Context, in *custom.UID, opts ...grpc.CallOption) (*pb.UserInfo, error)
+	First(ctx context.Context, in *dtopb.ID, opts ...grpc.CallOption) (*pb.UserInfo, error)
 	Me(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*pb.UserInfo, error)
 }
 
@@ -57,8 +57,8 @@ func (c *userServiceClient) Register(ctx context.Context, in *pb.UserRegister, o
 	return out, nil
 }
 
-func (c *userServiceClient) Login(ctx context.Context, in *pb.UserLogin, opts ...grpc.CallOption) (*pb.UserInfo, error) {
-	out := new(pb.UserInfo)
+func (c *userServiceClient) Login(ctx context.Context, in *pb.UserLogin, opts ...grpc.CallOption) (*pb.LoginInfo, error) {
+	out := new(pb.LoginInfo)
 	err := c.cc.Invoke(ctx, UserService_Login_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -75,7 +75,7 @@ func (c *userServiceClient) Update(ctx context.Context, in *pb.UserUpdate, opts 
 	return out, nil
 }
 
-func (c *userServiceClient) First(ctx context.Context, in *custom.UID, opts ...grpc.CallOption) (*pb.UserInfo, error) {
+func (c *userServiceClient) First(ctx context.Context, in *dtopb.ID, opts ...grpc.CallOption) (*pb.UserInfo, error) {
 	out := new(pb.UserInfo)
 	err := c.cc.Invoke(ctx, UserService_First_FullMethodName, in, out, opts...)
 	if err != nil {
@@ -98,9 +98,9 @@ func (c *userServiceClient) Me(ctx context.Context, in *empty.Empty, opts ...grp
 // for forward compatibility
 type UserServiceServer interface {
 	Register(context.Context, *pb.UserRegister) (*empty.Empty, error)
-	Login(context.Context, *pb.UserLogin) (*pb.UserInfo, error)
+	Login(context.Context, *pb.UserLogin) (*pb.LoginInfo, error)
 	Update(context.Context, *pb.UserUpdate) (*empty.Empty, error)
-	First(context.Context, *custom.UID) (*pb.UserInfo, error)
+	First(context.Context, *dtopb.ID) (*pb.UserInfo, error)
 	Me(context.Context, *empty.Empty) (*pb.UserInfo, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
@@ -112,13 +112,13 @@ type UnimplementedUserServiceServer struct {
 func (UnimplementedUserServiceServer) Register(context.Context, *pb.UserRegister) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Register not implemented")
 }
-func (UnimplementedUserServiceServer) Login(context.Context, *pb.UserLogin) (*pb.UserInfo, error) {
+func (UnimplementedUserServiceServer) Login(context.Context, *pb.UserLogin) (*pb.LoginInfo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
 }
 func (UnimplementedUserServiceServer) Update(context.Context, *pb.UserUpdate) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
 }
-func (UnimplementedUserServiceServer) First(context.Context, *custom.UID) (*pb.UserInfo, error) {
+func (UnimplementedUserServiceServer) First(context.Context, *dtopb.ID) (*pb.UserInfo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method First not implemented")
 }
 func (UnimplementedUserServiceServer) Me(context.Context, *empty.Empty) (*pb.UserInfo, error) {
@@ -192,7 +192,7 @@ func _UserService_Update_Handler(srv interface{}, ctx context.Context, dec func(
 }
 
 func _UserService_First_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(custom.UID)
+	in := new(dtopb.ID)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -204,7 +204,7 @@ func _UserService_First_Handler(srv interface{}, ctx context.Context, dec func(i
 		FullMethod: UserService_First_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServiceServer).First(ctx, req.(*custom.UID))
+		return srv.(UserServiceServer).First(ctx, req.(*dtopb.ID))
 	}
 	return interceptor(ctx, in, info, handler)
 }

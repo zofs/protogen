@@ -17,7 +17,7 @@ import (
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/utilities"
 	"github.com/zofs/protogen/accore/pb"
-	"github.com/zofs/protogen/custom"
+	"github.com/zofs/protogen/dtopb"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/grpclog"
@@ -53,7 +53,7 @@ func local_request_EmailService_List_0(ctx context.Context, marshaler runtime.Ma
 }
 
 func request_EmailService_Get_0(ctx context.Context, marshaler runtime.Marshaler, client EmailServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq custom.UID
+	var protoReq dtopb.ID
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -79,7 +79,7 @@ func request_EmailService_Get_0(ctx context.Context, marshaler runtime.Marshaler
 }
 
 func local_request_EmailService_Get_0(ctx context.Context, marshaler runtime.Marshaler, server EmailServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq custom.UID
+	var protoReq dtopb.ID
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -131,7 +131,7 @@ func local_request_EmailService_Add_0(ctx context.Context, marshaler runtime.Mar
 }
 
 func request_EmailService_SetPrimary_0(ctx context.Context, marshaler runtime.Marshaler, client EmailServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq custom.UID
+	var protoReq dtopb.ID
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -157,7 +157,7 @@ func request_EmailService_SetPrimary_0(ctx context.Context, marshaler runtime.Ma
 }
 
 func local_request_EmailService_SetPrimary_0(ctx context.Context, marshaler runtime.Marshaler, server EmailServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq custom.UID
+	var protoReq dtopb.ID
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -183,7 +183,7 @@ func local_request_EmailService_SetPrimary_0(ctx context.Context, marshaler runt
 }
 
 func request_EmailService_Delete_0(ctx context.Context, marshaler runtime.Marshaler, client EmailServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq custom.UID
+	var protoReq dtopb.ID
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -209,7 +209,7 @@ func request_EmailService_Delete_0(ctx context.Context, marshaler runtime.Marsha
 }
 
 func local_request_EmailService_Delete_0(ctx context.Context, marshaler runtime.Marshaler, server EmailServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq custom.UID
+	var protoReq dtopb.ID
 	var metadata runtime.ServerMetadata
 
 	var (

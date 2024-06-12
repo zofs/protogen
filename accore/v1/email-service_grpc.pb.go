@@ -10,7 +10,7 @@ import (
 	context "context"
 	empty "github.com/golang/protobuf/ptypes/empty"
 	pb "github.com/zofs/protogen/accore/pb"
-	custom "github.com/zofs/protogen/custom"
+	dtopb "github.com/zofs/protogen/dtopb"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -34,10 +34,10 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type EmailServiceClient interface {
 	List(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*pb.Emails, error)
-	Get(ctx context.Context, in *custom.UID, opts ...grpc.CallOption) (*pb.Email, error)
+	Get(ctx context.Context, in *dtopb.ID, opts ...grpc.CallOption) (*pb.Email, error)
 	Add(ctx context.Context, in *pb.Email, opts ...grpc.CallOption) (*empty.Empty, error)
-	SetPrimary(ctx context.Context, in *custom.UID, opts ...grpc.CallOption) (*empty.Empty, error)
-	Delete(ctx context.Context, in *custom.UID, opts ...grpc.CallOption) (*empty.Empty, error)
+	SetPrimary(ctx context.Context, in *dtopb.ID, opts ...grpc.CallOption) (*empty.Empty, error)
+	Delete(ctx context.Context, in *dtopb.ID, opts ...grpc.CallOption) (*empty.Empty, error)
 }
 
 type emailServiceClient struct {
@@ -57,7 +57,7 @@ func (c *emailServiceClient) List(ctx context.Context, in *empty.Empty, opts ...
 	return out, nil
 }
 
-func (c *emailServiceClient) Get(ctx context.Context, in *custom.UID, opts ...grpc.CallOption) (*pb.Email, error) {
+func (c *emailServiceClient) Get(ctx context.Context, in *dtopb.ID, opts ...grpc.CallOption) (*pb.Email, error) {
 	out := new(pb.Email)
 	err := c.cc.Invoke(ctx, EmailService_Get_FullMethodName, in, out, opts...)
 	if err != nil {
@@ -75,7 +75,7 @@ func (c *emailServiceClient) Add(ctx context.Context, in *pb.Email, opts ...grpc
 	return out, nil
 }
 
-func (c *emailServiceClient) SetPrimary(ctx context.Context, in *custom.UID, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *emailServiceClient) SetPrimary(ctx context.Context, in *dtopb.ID, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, EmailService_SetPrimary_FullMethodName, in, out, opts...)
 	if err != nil {
@@ -84,7 +84,7 @@ func (c *emailServiceClient) SetPrimary(ctx context.Context, in *custom.UID, opt
 	return out, nil
 }
 
-func (c *emailServiceClient) Delete(ctx context.Context, in *custom.UID, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *emailServiceClient) Delete(ctx context.Context, in *dtopb.ID, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, EmailService_Delete_FullMethodName, in, out, opts...)
 	if err != nil {
@@ -98,10 +98,10 @@ func (c *emailServiceClient) Delete(ctx context.Context, in *custom.UID, opts ..
 // for forward compatibility
 type EmailServiceServer interface {
 	List(context.Context, *empty.Empty) (*pb.Emails, error)
-	Get(context.Context, *custom.UID) (*pb.Email, error)
+	Get(context.Context, *dtopb.ID) (*pb.Email, error)
 	Add(context.Context, *pb.Email) (*empty.Empty, error)
-	SetPrimary(context.Context, *custom.UID) (*empty.Empty, error)
-	Delete(context.Context, *custom.UID) (*empty.Empty, error)
+	SetPrimary(context.Context, *dtopb.ID) (*empty.Empty, error)
+	Delete(context.Context, *dtopb.ID) (*empty.Empty, error)
 	mustEmbedUnimplementedEmailServiceServer()
 }
 
@@ -112,16 +112,16 @@ type UnimplementedEmailServiceServer struct {
 func (UnimplementedEmailServiceServer) List(context.Context, *empty.Empty) (*pb.Emails, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method List not implemented")
 }
-func (UnimplementedEmailServiceServer) Get(context.Context, *custom.UID) (*pb.Email, error) {
+func (UnimplementedEmailServiceServer) Get(context.Context, *dtopb.ID) (*pb.Email, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Get not implemented")
 }
 func (UnimplementedEmailServiceServer) Add(context.Context, *pb.Email) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Add not implemented")
 }
-func (UnimplementedEmailServiceServer) SetPrimary(context.Context, *custom.UID) (*empty.Empty, error) {
+func (UnimplementedEmailServiceServer) SetPrimary(context.Context, *dtopb.ID) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetPrimary not implemented")
 }
-func (UnimplementedEmailServiceServer) Delete(context.Context, *custom.UID) (*empty.Empty, error) {
+func (UnimplementedEmailServiceServer) Delete(context.Context, *dtopb.ID) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
 }
 func (UnimplementedEmailServiceServer) mustEmbedUnimplementedEmailServiceServer() {}
@@ -156,7 +156,7 @@ func _EmailService_List_Handler(srv interface{}, ctx context.Context, dec func(i
 }
 
 func _EmailService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(custom.UID)
+	in := new(dtopb.ID)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -168,7 +168,7 @@ func _EmailService_Get_Handler(srv interface{}, ctx context.Context, dec func(in
 		FullMethod: EmailService_Get_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EmailServiceServer).Get(ctx, req.(*custom.UID))
+		return srv.(EmailServiceServer).Get(ctx, req.(*dtopb.ID))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -192,7 +192,7 @@ func _EmailService_Add_Handler(srv interface{}, ctx context.Context, dec func(in
 }
 
 func _EmailService_SetPrimary_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(custom.UID)
+	in := new(dtopb.ID)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -204,13 +204,13 @@ func _EmailService_SetPrimary_Handler(srv interface{}, ctx context.Context, dec 
 		FullMethod: EmailService_SetPrimary_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EmailServiceServer).SetPrimary(ctx, req.(*custom.UID))
+		return srv.(EmailServiceServer).SetPrimary(ctx, req.(*dtopb.ID))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _EmailService_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(custom.UID)
+	in := new(dtopb.ID)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -222,7 +222,7 @@ func _EmailService_Delete_Handler(srv interface{}, ctx context.Context, dec func
 		FullMethod: EmailService_Delete_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EmailServiceServer).Delete(ctx, req.(*custom.UID))
+		return srv.(EmailServiceServer).Delete(ctx, req.(*dtopb.ID))
 	}
 	return interceptor(ctx, in, info, handler)
 }

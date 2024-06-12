@@ -10,7 +10,7 @@ import (
 	context "context"
 	empty "github.com/golang/protobuf/ptypes/empty"
 	pb "github.com/zofs/protogen/accore/pb"
-	custom "github.com/zofs/protogen/custom"
+	dtopb "github.com/zofs/protogen/dtopb"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -33,7 +33,7 @@ const (
 type PhoneServiceClient interface {
 	List(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*pb.Phones, error)
 	Add(ctx context.Context, in *pb.Phone, opts ...grpc.CallOption) (*empty.Empty, error)
-	Delete(ctx context.Context, in *custom.UID, opts ...grpc.CallOption) (*empty.Empty, error)
+	Delete(ctx context.Context, in *dtopb.ID, opts ...grpc.CallOption) (*empty.Empty, error)
 }
 
 type phoneServiceClient struct {
@@ -62,7 +62,7 @@ func (c *phoneServiceClient) Add(ctx context.Context, in *pb.Phone, opts ...grpc
 	return out, nil
 }
 
-func (c *phoneServiceClient) Delete(ctx context.Context, in *custom.UID, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *phoneServiceClient) Delete(ctx context.Context, in *dtopb.ID, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, PhoneService_Delete_FullMethodName, in, out, opts...)
 	if err != nil {
@@ -77,7 +77,7 @@ func (c *phoneServiceClient) Delete(ctx context.Context, in *custom.UID, opts ..
 type PhoneServiceServer interface {
 	List(context.Context, *empty.Empty) (*pb.Phones, error)
 	Add(context.Context, *pb.Phone) (*empty.Empty, error)
-	Delete(context.Context, *custom.UID) (*empty.Empty, error)
+	Delete(context.Context, *dtopb.ID) (*empty.Empty, error)
 	mustEmbedUnimplementedPhoneServiceServer()
 }
 
@@ -91,7 +91,7 @@ func (UnimplementedPhoneServiceServer) List(context.Context, *empty.Empty) (*pb.
 func (UnimplementedPhoneServiceServer) Add(context.Context, *pb.Phone) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Add not implemented")
 }
-func (UnimplementedPhoneServiceServer) Delete(context.Context, *custom.UID) (*empty.Empty, error) {
+func (UnimplementedPhoneServiceServer) Delete(context.Context, *dtopb.ID) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
 }
 func (UnimplementedPhoneServiceServer) mustEmbedUnimplementedPhoneServiceServer() {}
@@ -144,7 +144,7 @@ func _PhoneService_Add_Handler(srv interface{}, ctx context.Context, dec func(in
 }
 
 func _PhoneService_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(custom.UID)
+	in := new(dtopb.ID)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -156,7 +156,7 @@ func _PhoneService_Delete_Handler(srv interface{}, ctx context.Context, dec func
 		FullMethod: PhoneService_Delete_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PhoneServiceServer).Delete(ctx, req.(*custom.UID))
+		return srv.(PhoneServiceServer).Delete(ctx, req.(*dtopb.ID))
 	}
 	return interceptor(ctx, in, info, handler)
 }
