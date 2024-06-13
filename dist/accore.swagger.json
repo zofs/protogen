@@ -582,6 +582,10 @@
         },
         "email": {
           "type": "string"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
         }
       }
     },
@@ -616,6 +620,10 @@
         },
         "phone": {
           "type": "string"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
         }
       }
     },
