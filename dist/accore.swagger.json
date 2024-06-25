@@ -581,8 +581,7 @@
           "type": "string"
         },
         "status": {
-          "type": "integer",
-          "format": "int32"
+          "type": "string"
         }
       }
     },
@@ -622,8 +621,7 @@
           "type": "string"
         },
         "status": {
-          "type": "integer",
-          "format": "int32"
+          "type": "string"
         }
       }
     },
