@@ -33,9 +33,9 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserServiceClient interface {
-	Register(ctx context.Context, in *pb.UserRegister, opts ...grpc.CallOption) (*empty.Empty, error)
+	Register(ctx context.Context, in *pb.UserRegister, opts ...grpc.CallOption) (*pb.UserInfo, error)
 	Login(ctx context.Context, in *pb.UserLogin, opts ...grpc.CallOption) (*pb.LoginInfo, error)
-	Update(ctx context.Context, in *pb.UserUpdate, opts ...grpc.CallOption) (*empty.Empty, error)
+	Update(ctx context.Context, in *pb.UserUpdate, opts ...grpc.CallOption) (*pb.UserInfo, error)
 	First(ctx context.Context, in *dtopb.ID, opts ...grpc.CallOption) (*pb.UserInfo, error)
 	Me(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*pb.UserInfo, error)
 }
@@ -48,8 +48,8 @@ func NewUserServiceClient(cc grpc.ClientConnInterface) UserServiceClient {
 	return &userServiceClient{cc}
 }
 
-func (c *userServiceClient) Register(ctx context.Context, in *pb.UserRegister, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
+func (c *userServiceClient) Register(ctx context.Context, in *pb.UserRegister, opts ...grpc.CallOption) (*pb.UserInfo, error) {
+	out := new(pb.UserInfo)
 	err := c.cc.Invoke(ctx, UserService_Register_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -66,8 +66,8 @@ func (c *userServiceClient) Login(ctx context.Context, in *pb.UserLogin, opts ..
 	return out, nil
 }
 
-func (c *userServiceClient) Update(ctx context.Context, in *pb.UserUpdate, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
+func (c *userServiceClient) Update(ctx context.Context, in *pb.UserUpdate, opts ...grpc.CallOption) (*pb.UserInfo, error) {
+	out := new(pb.UserInfo)
 	err := c.cc.Invoke(ctx, UserService_Update_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -97,9 +97,9 @@ func (c *userServiceClient) Me(ctx context.Context, in *empty.Empty, opts ...grp
 // All implementations must embed UnimplementedUserServiceServer
 // for forward compatibility
 type UserServiceServer interface {
-	Register(context.Context, *pb.UserRegister) (*empty.Empty, error)
+	Register(context.Context, *pb.UserRegister) (*pb.UserInfo, error)
 	Login(context.Context, *pb.UserLogin) (*pb.LoginInfo, error)
-	Update(context.Context, *pb.UserUpdate) (*empty.Empty, error)
+	Update(context.Context, *pb.UserUpdate) (*pb.UserInfo, error)
 	First(context.Context, *dtopb.ID) (*pb.UserInfo, error)
 	Me(context.Context, *empty.Empty) (*pb.UserInfo, error)
 	mustEmbedUnimplementedUserServiceServer()
@@ -109,13 +109,13 @@ type UserServiceServer interface {
 type UnimplementedUserServiceServer struct {
 }
 
-func (UnimplementedUserServiceServer) Register(context.Context, *pb.UserRegister) (*empty.Empty, error) {
+func (UnimplementedUserServiceServer) Register(context.Context, *pb.UserRegister) (*pb.UserInfo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Register not implemented")
 }
 func (UnimplementedUserServiceServer) Login(context.Context, *pb.UserLogin) (*pb.LoginInfo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
 }
-func (UnimplementedUserServiceServer) Update(context.Context, *pb.UserUpdate) (*empty.Empty, error) {
+func (UnimplementedUserServiceServer) Update(context.Context, *pb.UserUpdate) (*pb.UserInfo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
 }
 func (UnimplementedUserServiceServer) First(context.Context, *dtopb.ID) (*pb.UserInfo, error) {

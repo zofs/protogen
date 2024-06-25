@@ -68,8 +68,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "type": "object",
-              "properties": {}
+              "$ref": "#/definitions/pbUserInfo"
             }
           },
           "default": {
@@ -126,8 +125,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "type": "object",
-              "properties": {}
+              "$ref": "#/definitions/pbUserInfo"
             }
           },
           "default": {
@@ -189,8 +187,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "type": "object",
-              "properties": {}
+              "$ref": "#/definitions/pbEmail"
             }
           },
           "default": {
@@ -288,8 +285,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "type": "object",
-              "properties": {}
+              "$ref": "#/definitions/pbEmail"
             }
           },
           "default": {
@@ -387,8 +383,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "type": "object",
-              "properties": {}
+              "$ref": "#/definitions/pbPhone"
             }
           },
           "default": {
@@ -486,8 +481,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "type": "object",
-              "properties": {}
+              "$ref": "#/definitions/pbPhone"
             }
           },
           "default": {
@@ -580,6 +574,9 @@
         "id": {
           "type": "string"
         },
+        "uid": {
+          "type": "string"
+        },
         "email": {
           "type": "string"
         },
@@ -616,6 +613,9 @@
       "type": "object",
       "properties": {
         "id": {
+          "type": "string"
+        },
+        "uid": {
           "type": "string"
         },
         "phone": {
