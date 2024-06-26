@@ -22,13 +22,11 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	UserService_Register_FullMethodName             = "/accore.v1.UserService/Register"
-	UserService_Login_FullMethodName                = "/accore.v1.UserService/Login"
-	UserService_GoogleOauth_FullMethodName          = "/accore.v1.UserService/GoogleOauth"
-	UserService_GoogleOauthAuthorize_FullMethodName = "/accore.v1.UserService/GoogleOauthAuthorize"
-	UserService_Update_FullMethodName               = "/accore.v1.UserService/Update"
-	UserService_First_FullMethodName                = "/accore.v1.UserService/First"
-	UserService_Me_FullMethodName                   = "/accore.v1.UserService/Me"
+	UserService_Register_FullMethodName = "/accore.v1.UserService/Register"
+	UserService_Login_FullMethodName    = "/accore.v1.UserService/Login"
+	UserService_Update_FullMethodName   = "/accore.v1.UserService/Update"
+	UserService_First_FullMethodName    = "/accore.v1.UserService/First"
+	UserService_Me_FullMethodName       = "/accore.v1.UserService/Me"
 )
 
 // UserServiceClient is the client API for UserService service.
@@ -37,8 +35,6 @@ const (
 type UserServiceClient interface {
 	Register(ctx context.Context, in *pb.UserRegister, opts ...grpc.CallOption) (*pb.UserInfo, error)
 	Login(ctx context.Context, in *pb.UserLogin, opts ...grpc.CallOption) (*pb.LoginInfo, error)
-	GoogleOauth(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*empty.Empty, error)
-	GoogleOauthAuthorize(ctx context.Context, in *pb.OauthCode, opts ...grpc.CallOption) (*empty.Empty, error)
 	Update(ctx context.Context, in *pb.UserUpdate, opts ...grpc.CallOption) (*pb.UserInfo, error)
 	First(ctx context.Context, in *dtopb.ID, opts ...grpc.CallOption) (*pb.UserInfo, error)
 	Me(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*pb.UserInfo, error)
@@ -64,24 +60,6 @@ func (c *userServiceClient) Register(ctx context.Context, in *pb.UserRegister, o
 func (c *userServiceClient) Login(ctx context.Context, in *pb.UserLogin, opts ...grpc.CallOption) (*pb.LoginInfo, error) {
 	out := new(pb.LoginInfo)
 	err := c.cc.Invoke(ctx, UserService_Login_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *userServiceClient) GoogleOauth(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, UserService_GoogleOauth_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *userServiceClient) GoogleOauthAuthorize(ctx context.Context, in *pb.OauthCode, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, UserService_GoogleOauthAuthorize_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -121,8 +99,6 @@ func (c *userServiceClient) Me(ctx context.Context, in *empty.Empty, opts ...grp
 type UserServiceServer interface {
 	Register(context.Context, *pb.UserRegister) (*pb.UserInfo, error)
 	Login(context.Context, *pb.UserLogin) (*pb.LoginInfo, error)
-	GoogleOauth(context.Context, *empty.Empty) (*empty.Empty, error)
-	GoogleOauthAuthorize(context.Context, *pb.OauthCode) (*empty.Empty, error)
 	Update(context.Context, *pb.UserUpdate) (*pb.UserInfo, error)
 	First(context.Context, *dtopb.ID) (*pb.UserInfo, error)
 	Me(context.Context, *empty.Empty) (*pb.UserInfo, error)
@@ -138,12 +114,6 @@ func (UnimplementedUserServiceServer) Register(context.Context, *pb.UserRegister
 }
 func (UnimplementedUserServiceServer) Login(context.Context, *pb.UserLogin) (*pb.LoginInfo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
-}
-func (UnimplementedUserServiceServer) GoogleOauth(context.Context, *empty.Empty) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GoogleOauth not implemented")
-}
-func (UnimplementedUserServiceServer) GoogleOauthAuthorize(context.Context, *pb.OauthCode) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GoogleOauthAuthorize not implemented")
 }
 func (UnimplementedUserServiceServer) Update(context.Context, *pb.UserUpdate) (*pb.UserInfo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
@@ -199,42 +169,6 @@ func _UserService_Login_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServiceServer).Login(ctx, req.(*pb.UserLogin))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _UserService_GoogleOauth_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(empty.Empty)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UserServiceServer).GoogleOauth(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: UserService_GoogleOauth_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServiceServer).GoogleOauth(ctx, req.(*empty.Empty))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _UserService_GoogleOauthAuthorize_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(pb.OauthCode)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UserServiceServer).GoogleOauthAuthorize(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: UserService_GoogleOauthAuthorize_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServiceServer).GoogleOauthAuthorize(ctx, req.(*pb.OauthCode))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -307,14 +241,6 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Login",
 			Handler:    _UserService_Login_Handler,
-		},
-		{
-			MethodName: "GoogleOauth",
-			Handler:    _UserService_GoogleOauth_Handler,
-		},
-		{
-			MethodName: "GoogleOauthAuthorize",
-			Handler:    _UserService_GoogleOauthAuthorize_Handler,
 		},
 		{
 			MethodName: "Update",

@@ -13,6 +13,9 @@
       "name": "EmailService"
     },
     {
+      "name": "OAuthClientService"
+    },
+    {
       "name": "PasswordService"
     },
     {
@@ -61,9 +64,9 @@
         ]
       }
     },
-    "/v1/login/google": {
+    "/v1/o/google": {
       "get": {
-        "operationId": "UserService_GoogleOauth",
+        "operationId": "OAuthClientService_GoogleOauth",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -80,13 +83,13 @@
           }
         },
         "tags": [
-          "UserService"
+          "OAuthClientService"
         ]
       }
     },
-    "/v1/login/google/authorize": {
+    "/v1/o/google/authorize": {
       "get": {
-        "operationId": "UserService_GoogleOauthAuthorize",
+        "operationId": "OAuthClientService_GoogleOauthAuthorize",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -117,7 +120,7 @@
           }
         ],
         "tags": [
-          "UserService"
+          "OAuthClientService"
         ]
       }
     },
