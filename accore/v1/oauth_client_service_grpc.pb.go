@@ -30,7 +30,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type OAuthClientServiceClient interface {
 	GoogleOauth(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*empty.Empty, error)
-	GoogleOauthAuthorize(ctx context.Context, in *pb.OauthCode, opts ...grpc.CallOption) (*empty.Empty, error)
+	GoogleOauthAuthorize(ctx context.Context, in *pb.OauthCode, opts ...grpc.CallOption) (*pb.LoginInfo, error)
 }
 
 type oAuthClientServiceClient struct {
@@ -50,8 +50,8 @@ func (c *oAuthClientServiceClient) GoogleOauth(ctx context.Context, in *empty.Em
 	return out, nil
 }
 
-func (c *oAuthClientServiceClient) GoogleOauthAuthorize(ctx context.Context, in *pb.OauthCode, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
+func (c *oAuthClientServiceClient) GoogleOauthAuthorize(ctx context.Context, in *pb.OauthCode, opts ...grpc.CallOption) (*pb.LoginInfo, error) {
+	out := new(pb.LoginInfo)
 	err := c.cc.Invoke(ctx, OAuthClientService_GoogleOauthAuthorize_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -64,7 +64,7 @@ func (c *oAuthClientServiceClient) GoogleOauthAuthorize(ctx context.Context, in 
 // for forward compatibility
 type OAuthClientServiceServer interface {
 	GoogleOauth(context.Context, *empty.Empty) (*empty.Empty, error)
-	GoogleOauthAuthorize(context.Context, *pb.OauthCode) (*empty.Empty, error)
+	GoogleOauthAuthorize(context.Context, *pb.OauthCode) (*pb.LoginInfo, error)
 	mustEmbedUnimplementedOAuthClientServiceServer()
 }
 
@@ -75,7 +75,7 @@ type UnimplementedOAuthClientServiceServer struct {
 func (UnimplementedOAuthClientServiceServer) GoogleOauth(context.Context, *empty.Empty) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GoogleOauth not implemented")
 }
-func (UnimplementedOAuthClientServiceServer) GoogleOauthAuthorize(context.Context, *pb.OauthCode) (*empty.Empty, error) {
+func (UnimplementedOAuthClientServiceServer) GoogleOauthAuthorize(context.Context, *pb.OauthCode) (*pb.LoginInfo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GoogleOauthAuthorize not implemented")
 }
 func (UnimplementedOAuthClientServiceServer) mustEmbedUnimplementedOAuthClientServiceServer() {}
