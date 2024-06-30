@@ -5,6 +5,7 @@ window.onload = function() {
   window.ui = SwaggerUIBundle({
     urls: [
       {url:"accore.swagger.json",name:"account service"},
+      {url:"catalog.swagger.json",name:"catalog service"},
   ],
     dom_id: '#swagger-ui',
     deepLinking: true,
