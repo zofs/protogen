@@ -159,6 +159,46 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "paginate.Page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "paginate.Limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "paginate.Order",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "paginate.SortBy",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "paginate.TotalRow",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "paginate.TotalPage",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
           }
         ],
         "tags": [
@@ -805,6 +845,9 @@
         "showcaseId": {
           "type": "string"
         },
+        "paginate": {
+          "$ref": "#/definitions/pbPaginate"
+        },
         "products": {
           "type": "array",
           "items": {
@@ -826,6 +869,33 @@
             "type": "object",
             "$ref": "#/definitions/pbShowcase"
           }
+        }
+      }
+    },
+    "pbPaginate": {
+      "type": "object",
+      "properties": {
+        "Page": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "Limit": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "Order": {
+          "type": "string"
+        },
+        "SortBy": {
+          "type": "string"
+        },
+        "TotalRow": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "TotalPage": {
+          "type": "integer",
+          "format": "int64"
         }
       }
     },
