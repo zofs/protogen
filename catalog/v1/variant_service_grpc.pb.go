@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 const (
 	VariantService_Create_FullMethodName = "/catalog.v1.pb.VariantService/Create"
 	VariantService_Update_FullMethodName = "/catalog.v1.pb.VariantService/Update"
-	VariantService_Get_FullMethodName    = "/catalog.v1.pb.VariantService/Get"
+	VariantService_List_FullMethodName   = "/catalog.v1.pb.VariantService/List"
 	VariantService_Delete_FullMethodName = "/catalog.v1.pb.VariantService/Delete"
 )
 
@@ -33,7 +33,7 @@ const (
 type VariantServiceClient interface {
 	Create(ctx context.Context, in *VariantCreate, opts ...grpc.CallOption) (*Variant, error)
 	Update(ctx context.Context, in *VariantUpdate, opts ...grpc.CallOption) (*Variant, error)
-	Get(ctx context.Context, in *dtopb.IDString, opts ...grpc.CallOption) (*Variant, error)
+	List(ctx context.Context, in *dtopb.IDString, opts ...grpc.CallOption) (*ListVariant, error)
 	Delete(ctx context.Context, in *dtopb.IDString, opts ...grpc.CallOption) (*empty.Empty, error)
 }
 
@@ -63,9 +63,9 @@ func (c *variantServiceClient) Update(ctx context.Context, in *VariantUpdate, op
 	return out, nil
 }
 
-func (c *variantServiceClient) Get(ctx context.Context, in *dtopb.IDString, opts ...grpc.CallOption) (*Variant, error) {
-	out := new(Variant)
-	err := c.cc.Invoke(ctx, VariantService_Get_FullMethodName, in, out, opts...)
+func (c *variantServiceClient) List(ctx context.Context, in *dtopb.IDString, opts ...grpc.CallOption) (*ListVariant, error) {
+	out := new(ListVariant)
+	err := c.cc.Invoke(ctx, VariantService_List_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -87,7 +87,7 @@ func (c *variantServiceClient) Delete(ctx context.Context, in *dtopb.IDString, o
 type VariantServiceServer interface {
 	Create(context.Context, *VariantCreate) (*Variant, error)
 	Update(context.Context, *VariantUpdate) (*Variant, error)
-	Get(context.Context, *dtopb.IDString) (*Variant, error)
+	List(context.Context, *dtopb.IDString) (*ListVariant, error)
 	Delete(context.Context, *dtopb.IDString) (*empty.Empty, error)
 	mustEmbedUnimplementedVariantServiceServer()
 }
@@ -102,8 +102,8 @@ func (UnimplementedVariantServiceServer) Create(context.Context, *VariantCreate)
 func (UnimplementedVariantServiceServer) Update(context.Context, *VariantUpdate) (*Variant, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
 }
-func (UnimplementedVariantServiceServer) Get(context.Context, *dtopb.IDString) (*Variant, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Get not implemented")
+func (UnimplementedVariantServiceServer) List(context.Context, *dtopb.IDString) (*ListVariant, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method List not implemented")
 }
 func (UnimplementedVariantServiceServer) Delete(context.Context, *dtopb.IDString) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
@@ -157,20 +157,20 @@ func _VariantService_Update_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
-func _VariantService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _VariantService_List_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(dtopb.IDString)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(VariantServiceServer).Get(ctx, in)
+		return srv.(VariantServiceServer).List(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: VariantService_Get_FullMethodName,
+		FullMethod: VariantService_List_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(VariantServiceServer).Get(ctx, req.(*dtopb.IDString))
+		return srv.(VariantServiceServer).List(ctx, req.(*dtopb.IDString))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -209,8 +209,8 @@ var VariantService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _VariantService_Update_Handler,
 		},
 		{
-			MethodName: "Get",
-			Handler:    _VariantService_Get_Handler,
+			MethodName: "List",
+			Handler:    _VariantService_List_Handler,
 		},
 		{
 			MethodName: "Delete",

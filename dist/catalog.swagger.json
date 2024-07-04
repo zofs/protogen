@@ -161,6 +161,12 @@
             "type": "string"
           },
           {
+            "name": "categoryId",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "paginate.Page",
             "in": "query",
             "required": false,
@@ -651,6 +657,39 @@
       }
     },
     "/v1/catalog/variant": {
+      "get": {
+        "operationId": "VariantService_List",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbListVariant"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "VariantService"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
       "post": {
         "operationId": "VariantService_Create",
         "responses": {
@@ -688,39 +727,6 @@
       }
     },
     "/v1/catalog/variant/{id}": {
-      "get": {
-        "operationId": "VariantService_Get",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/pbVariant"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "VariantService"
-        ],
-        "security": [
-          {
-            "bearer": []
-          }
-        ]
-      },
       "delete": {
         "operationId": "VariantService_Delete",
         "responses": {
@@ -845,6 +851,9 @@
         "showcaseId": {
           "type": "string"
         },
+        "categoryId": {
+          "type": "string"
+        },
         "paginate": {
           "$ref": "#/definitions/pbPaginate"
         },
@@ -868,6 +877,18 @@
           "items": {
             "type": "object",
             "$ref": "#/definitions/pbShowcase"
+          }
+        }
+      }
+    },
+    "pbListVariant": {
+      "type": "object",
+      "properties": {
+        "variants": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/pbVariant"
           }
         }
       }
