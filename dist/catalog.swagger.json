@@ -1048,9 +1048,6 @@
     "pbStoreCreate": {
       "type": "object",
       "properties": {
-        "ownerId": {
-          "type": "string"
-        },
         "name": {
           "type": "string"
         },
