@@ -111,7 +111,7 @@ func request_VariantService_Update_0(ctx context.Context, marshaler runtime.Mars
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "product_id")
 	}
 
-	protoReq.ProductId, err = runtime.StringValue(val)
+	protoReq.ProductId, err = runtime.String(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "product_id", err)
 	}
@@ -151,7 +151,7 @@ func local_request_VariantService_Update_0(ctx context.Context, marshaler runtim
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "product_id")
 	}
 
-	protoReq.ProductId, err = runtime.StringValue(val)
+	protoReq.ProductId, err = runtime.String(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "product_id", err)
 	}

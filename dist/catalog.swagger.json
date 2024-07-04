@@ -926,6 +926,9 @@
         "id": {
           "type": "string"
         },
+        "storeId": {
+          "type": "string"
+        },
         "showcaseId": {
           "type": "string"
         },
@@ -959,6 +962,9 @@
     "pbProductCreate": {
       "type": "object",
       "properties": {
+        "storeId": {
+          "type": "string"
+        },
         "showcaseId": {
           "type": "string"
         },
@@ -980,6 +986,9 @@
     "pbProductServiceUpdateBody": {
       "type": "object",
       "properties": {
+        "storeId": {
+          "type": "string"
+        },
         "showcaseId": {
           "type": "string"
         },
