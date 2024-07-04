@@ -9,7 +9,6 @@ package pb
 import (
 	context "context"
 	empty "github.com/golang/protobuf/ptypes/empty"
-	dtopb "github.com/zofs/protogen/dtopb"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -34,7 +33,7 @@ type ShowcaseServiceClient interface {
 	Create(ctx context.Context, in *ShowcaseCreate, opts ...grpc.CallOption) (*Showcase, error)
 	Update(ctx context.Context, in *ShowcaseUpdate, opts ...grpc.CallOption) (*Showcase, error)
 	List(ctx context.Context, in *ListShowcase, opts ...grpc.CallOption) (*ListShowcase, error)
-	Delete(ctx context.Context, in *dtopb.IDString, opts ...grpc.CallOption) (*empty.Empty, error)
+	Delete(ctx context.Context, in *ShowcaseDelete, opts ...grpc.CallOption) (*empty.Empty, error)
 }
 
 type showcaseServiceClient struct {
@@ -72,7 +71,7 @@ func (c *showcaseServiceClient) List(ctx context.Context, in *ListShowcase, opts
 	return out, nil
 }
 
-func (c *showcaseServiceClient) Delete(ctx context.Context, in *dtopb.IDString, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *showcaseServiceClient) Delete(ctx context.Context, in *ShowcaseDelete, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, ShowcaseService_Delete_FullMethodName, in, out, opts...)
 	if err != nil {
@@ -88,7 +87,7 @@ type ShowcaseServiceServer interface {
 	Create(context.Context, *ShowcaseCreate) (*Showcase, error)
 	Update(context.Context, *ShowcaseUpdate) (*Showcase, error)
 	List(context.Context, *ListShowcase) (*ListShowcase, error)
-	Delete(context.Context, *dtopb.IDString) (*empty.Empty, error)
+	Delete(context.Context, *ShowcaseDelete) (*empty.Empty, error)
 	mustEmbedUnimplementedShowcaseServiceServer()
 }
 
@@ -105,7 +104,7 @@ func (UnimplementedShowcaseServiceServer) Update(context.Context, *ShowcaseUpdat
 func (UnimplementedShowcaseServiceServer) List(context.Context, *ListShowcase) (*ListShowcase, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method List not implemented")
 }
-func (UnimplementedShowcaseServiceServer) Delete(context.Context, *dtopb.IDString) (*empty.Empty, error) {
+func (UnimplementedShowcaseServiceServer) Delete(context.Context, *ShowcaseDelete) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
 }
 func (UnimplementedShowcaseServiceServer) mustEmbedUnimplementedShowcaseServiceServer() {}
@@ -176,7 +175,7 @@ func _ShowcaseService_List_Handler(srv interface{}, ctx context.Context, dec fun
 }
 
 func _ShowcaseService_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(dtopb.IDString)
+	in := new(ShowcaseDelete)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -188,7 +187,7 @@ func _ShowcaseService_Delete_Handler(srv interface{}, ctx context.Context, dec f
 		FullMethod: ShowcaseService_Delete_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ShowcaseServiceServer).Delete(ctx, req.(*dtopb.IDString))
+		return srv.(ShowcaseServiceServer).Delete(ctx, req.(*ShowcaseDelete))
 	}
 	return interceptor(ctx, in, info, handler)
 }

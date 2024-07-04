@@ -167,44 +167,50 @@
             "type": "string"
           },
           {
-            "name": "paginate.Page",
+            "name": "paginate.page",
             "in": "query",
             "required": false,
             "type": "integer",
             "format": "int64"
           },
           {
-            "name": "paginate.Limit",
+            "name": "paginate.limit",
             "in": "query",
             "required": false,
             "type": "integer",
             "format": "int64"
           },
           {
-            "name": "paginate.Order",
+            "name": "paginate.order",
             "in": "query",
             "required": false,
             "type": "string"
           },
           {
-            "name": "paginate.SortBy",
+            "name": "paginate.sortBy",
             "in": "query",
             "required": false,
             "type": "string"
           },
           {
-            "name": "paginate.TotalRow",
+            "name": "paginate.totalRow",
             "in": "query",
             "required": false,
             "type": "integer",
             "format": "int64"
           },
           {
-            "name": "paginate.TotalPage",
+            "name": "paginate.totalPage",
             "in": "query",
             "required": false,
             "type": "integer",
             "format": "int64"
+          },
+          {
+            "name": "paginate.search",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -362,47 +368,14 @@
         ]
       }
     },
-    "/v1/catalog/showcase": {
-      "get": {
-        "operationId": "ShowcaseService_List",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/pbListShowcase"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "storeId",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "ShowcaseService"
-        ],
-        "security": [
-          {
-            "bearer": []
-          }
-        ]
-      },
+    "/v1/catalog/product/{productId}/variant": {
       "post": {
-        "operationId": "ShowcaseService_Create",
+        "operationId": "VariantService_Create",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/pbShowcase"
+              "$ref": "#/definitions/pbVariant"
             }
           },
           "default": {
@@ -413,17 +386,23 @@
           }
         },
         "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
           {
             "name": "body",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/pbShowcaseCreate"
+              "$ref": "#/definitions/pbVariantServiceCreateBody"
             }
           }
         ],
         "tags": [
-          "ShowcaseService"
+          "VariantService"
         ],
         "security": [
           {
@@ -432,9 +411,9 @@
         ]
       }
     },
-    "/v1/catalog/showcase/{id}": {
+    "/v1/catalog/product/{productId}/variant/{id}": {
       "delete": {
-        "operationId": "ShowcaseService_Delete",
+        "operationId": "VariantService_Delete",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -452,6 +431,12 @@
         },
         "parameters": [
           {
+            "name": "productId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
             "name": "id",
             "in": "path",
             "required": true,
@@ -459,7 +444,7 @@
           }
         ],
         "tags": [
-          "ShowcaseService"
+          "VariantService"
         ],
         "security": [
           {
@@ -468,12 +453,12 @@
         ]
       },
       "put": {
-        "operationId": "ShowcaseService_Update",
+        "operationId": "VariantService_Update",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/pbShowcase"
+              "$ref": "#/definitions/pbVariant"
             }
           },
           "default": {
@@ -485,6 +470,12 @@
         },
         "parameters": [
           {
+            "name": "productId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
             "name": "id",
             "in": "path",
             "required": true,
@@ -495,12 +486,12 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/pbShowcaseServiceUpdateBody"
+              "$ref": "#/definitions/pbVariantServiceUpdateBody"
             }
           }
         ],
         "tags": [
-          "ShowcaseService"
+          "VariantService"
         ],
         "security": [
           {
@@ -656,14 +647,14 @@
         ]
       }
     },
-    "/v1/catalog/variant": {
+    "/v1/catalog/store/{storeId}/showcase": {
       "get": {
-        "operationId": "VariantService_List",
+        "operationId": "ShowcaseService_List",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/pbListVariant"
+              "$ref": "#/definitions/pbListShowcase"
             }
           },
           "default": {
@@ -675,14 +666,14 @@
         },
         "parameters": [
           {
-            "name": "id",
-            "in": "query",
-            "required": false,
+            "name": "storeId",
+            "in": "path",
+            "required": true,
             "type": "string"
           }
         ],
         "tags": [
-          "VariantService"
+          "ShowcaseService"
         ],
         "security": [
           {
@@ -691,12 +682,12 @@
         ]
       },
       "post": {
-        "operationId": "VariantService_Create",
+        "operationId": "ShowcaseService_Create",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/pbVariant"
+              "$ref": "#/definitions/pbShowcase"
             }
           },
           "default": {
@@ -708,16 +699,22 @@
         },
         "parameters": [
           {
+            "name": "storeId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
             "name": "body",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/pbVariantCreate"
+              "$ref": "#/definitions/pbShowcaseServiceCreateBody"
             }
           }
         ],
         "tags": [
-          "VariantService"
+          "ShowcaseService"
         ],
         "security": [
           {
@@ -726,9 +723,9 @@
         ]
       }
     },
-    "/v1/catalog/variant/{id}": {
+    "/v1/catalog/store/{storeId}/showcase/{id}": {
       "delete": {
-        "operationId": "VariantService_Delete",
+        "operationId": "ShowcaseService_Delete",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -746,6 +743,12 @@
         },
         "parameters": [
           {
+            "name": "storeId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
             "name": "id",
             "in": "path",
             "required": true,
@@ -753,7 +756,7 @@
           }
         ],
         "tags": [
-          "VariantService"
+          "ShowcaseService"
         ],
         "security": [
           {
@@ -762,12 +765,12 @@
         ]
       },
       "put": {
-        "operationId": "VariantService_Update",
+        "operationId": "ShowcaseService_Update",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/pbVariant"
+              "$ref": "#/definitions/pbShowcase"
             }
           },
           "default": {
@@ -779,6 +782,12 @@
         },
         "parameters": [
           {
+            "name": "storeId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
             "name": "id",
             "in": "path",
             "required": true,
@@ -789,12 +798,12 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/pbVariantServiceUpdateBody"
+              "$ref": "#/definitions/pbShowcaseServiceUpdateBody"
             }
           }
         ],
         "tags": [
-          "VariantService"
+          "ShowcaseService"
         ],
         "security": [
           {
@@ -805,6 +814,36 @@
     }
   },
   "definitions": {
+    "dtopbPagination": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "limit": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "order": {
+          "type": "string"
+        },
+        "sortBy": {
+          "type": "string"
+        },
+        "totalRow": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "totalPage": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "search": {
+          "type": "string"
+        }
+      }
+    },
     "pbCategory": {
       "type": "object",
       "properties": {
@@ -855,7 +894,7 @@
           "type": "string"
         },
         "paginate": {
-          "$ref": "#/definitions/pbPaginate"
+          "$ref": "#/definitions/dtopbPagination"
         },
         "products": {
           "type": "array",
@@ -878,45 +917,6 @@
             "type": "object",
             "$ref": "#/definitions/pbShowcase"
           }
-        }
-      }
-    },
-    "pbListVariant": {
-      "type": "object",
-      "properties": {
-        "variants": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/pbVariant"
-          }
-        }
-      }
-    },
-    "pbPaginate": {
-      "type": "object",
-      "properties": {
-        "Page": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "Limit": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "Order": {
-          "type": "string"
-        },
-        "SortBy": {
-          "type": "string"
-        },
-        "TotalRow": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "TotalPage": {
-          "type": "integer",
-          "format": "int64"
         }
       }
     },
@@ -1012,12 +1012,9 @@
         }
       }
     },
-    "pbShowcaseCreate": {
+    "pbShowcaseServiceCreateBody": {
       "type": "object",
       "properties": {
-        "storeId": {
-          "type": "string"
-        },
         "name": {
           "type": "string"
         }
@@ -1026,9 +1023,6 @@
     "pbShowcaseServiceUpdateBody": {
       "type": "object",
       "properties": {
-        "storeId": {
-          "type": "string"
-        },
         "name": {
           "type": "string"
         }
@@ -1103,12 +1097,9 @@
         }
       }
     },
-    "pbVariantCreate": {
+    "pbVariantServiceCreateBody": {
       "type": "object",
       "properties": {
-        "productId": {
-          "type": "string"
-        },
         "sku": {
           "type": "string"
         },
@@ -1127,9 +1118,6 @@
     "pbVariantServiceUpdateBody": {
       "type": "object",
       "properties": {
-        "productId": {
-          "type": "string"
-        },
         "sku": {
           "type": "string"
         },
