@@ -6,6 +6,7 @@ window.onload = function() {
     urls: [
       {url:"accore.swagger.json",name:"account service"},
       {url:"catalog.swagger.json",name:"catalog service"},
+      {url:"cart.swagger.json",name:"cart service"},
   ],
     dom_id: '#swagger-ui',
     deepLinking: true,
